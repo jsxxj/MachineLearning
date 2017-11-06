@@ -68,7 +68,7 @@ def stocGradAscent2(dataMat,classLabel,numInter=150):
             h = sigmoid(sum(dataMat[randomIndex]*weights))
             error = classLabel[randomIndex] - h
             weights = weights + alpha*error*dataMat[randomIndex]
-            del(dataMat[randomIndex]) #从列表中删除这个数值
+            del(dataIndex[randomIndex]) #从列表中删除这个数值
     return weights
     
 def plotBestFit():
@@ -102,13 +102,13 @@ def plotBestFit():
 '''采用逻辑回归预测疝气病马的死亡率'''
 
 def classifyVector(inx,weights):
-    prob = sigmoid(sum(intx*weights))
+    prob = sigmoid(sum(inx*weights))
     if prob>0.5:
         return 1
     else:
         return 0
         
-def colicTets():
+def colicTests():
     frTrain = open('horseColicTraining.txt')
     frTest = open('horseColicTest.txt')
     trainingSet = []
@@ -120,7 +120,7 @@ def colicTets():
             lineArr.append(float(currLine[i]))
         trainingSet.append(lineArr)
         trainingLabels.append(float(currLine[21]))
-    trainingWeights = stocGradAscent1(array(trainingSet,trainingLabels,500))
+    trainingWeights = stocGradAscent2(array(trainingSet),trainingLabels,1000)
     errorCount = 0
     numTestVec = 0
     for line in frTest.readlines():
@@ -131,10 +131,11 @@ def colicTets():
             lineArr.append(float(currLine[i]))
         if int(classifyVector(array(lineArr),trainingWeights)) != int(currLine[21]):
             errorCount += 1
-        errorRate = (float(errorCount)/numTestVec)
-        print 'the error rate of the test is : %f' % errorRate
+            
+    errorRate = (float(errorCount)/numTestVec)
+    print 'the error rate of the test is : %f' % errorRate
         
-        return errorRate
+    return errorRate
         
 def multiTest():
     numTests = 10
@@ -145,6 +146,8 @@ def multiTest():
     
     
 if __name__ == '__main__':
-    plotBestFit()
+    #plotBestFit()
+    #colicTets()
+    multiTest()
 
   
