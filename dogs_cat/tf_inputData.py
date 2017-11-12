@@ -72,8 +72,6 @@ def get_batch(image, label, image_W, image_H, batch_size, capacity):
                                               batch_size=batch_size,  
                                               num_threads=64,   # 线程  
                                               capacity=capacity)  
-  
-    # 这行多余？  
-    # label_batch = tf.reshape(label_batch, [batch_size])  
+ 
   
     return image_batch, label_batch  
