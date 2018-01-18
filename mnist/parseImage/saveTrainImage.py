@@ -26,3 +26,30 @@ for image in range(0,numImages):
     #plt.show()
     im=Image.fromarray(im)
     im.save('train/train_%s.bmp'%image,'bmp')
+    
+    
+ 
+方法2：
+#encdoing=UTF-8
+from PIL import Image
+import struct
+
+def read_image(filename):
+  filename='train-images-idx3-ubyte'
+  f=open(filename,'rb')
+  index=0
+  buf=f,read()
+  f.close()
+  
+  magic,images,rows,columns=struct.unpack_from('>IIII',buf,index)
+  index+=struct.calcsize('>IIII')
+  for i in xrange(images):
+    image=Image.new('L',(columns,rows))
+    for x in xrange(rows):
+      for y in xrange(columns):
+         image.putpixel((y,x),int(struct.unpack_from('>B',buf,index)[0]))
+         index+=struct.calcsize('>B')
+  print 'save'+str(i)+'image'
+  image.save('home/save/'+str(i)+'.png')
+  print ok
+
